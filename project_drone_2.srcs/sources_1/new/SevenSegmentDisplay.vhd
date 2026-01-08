@@ -71,22 +71,22 @@ architecture Behavioral of SevenSegmentDisplay is
     
 begin
     -- Convert mode to BCD digits
-    -- mode "00" -> display "01" (slw)
+    -- mode "00" -> display "01" (slow)
     -- mode "01" -> display "02" (normal)
-    -- mode "10" -> display "03" (fst)
+    -- mode "10" -> display "03" (fast)
     
     -- Left wheel digits (rightmost on display)
     digit0 <= "0001" when mode_left = "00" else
               "0010" when mode_left = "01" else
               "0011" when mode_left = "10" else
-              "0000";
+              "0000";  -- Default: display 0
     digit1 <= "0000";  -- Always 0 for tens digit
     
     -- Right wheel digits (leftmost on display)
     digit2 <= "0001" when mode_right = "00" else
               "0010" when mode_right = "01" else
               "0011" when mode_right = "10" else
-              "0000";
+              "0000";  -- Default: display 0
     digit3 <= "0000";  -- Always 0 for tens digit
     
     -- Refresh counter and digit selector
