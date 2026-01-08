@@ -36,7 +36,9 @@ entity Direction is
         state_move : in std_logic;
 
         motorLeft : out std_logic;
-        motorRight : out std_logic
+        motorRight : out std_logic;
+        mode_right : out std_logic_vector(1 downto 0);
+        mode_left : out std_logic_vector(1 downto 0)
     );
 end Direction;
 
@@ -47,22 +49,32 @@ begin
         if state_move = '0' then 
             motorLeft <= '0';
             motorRight <= '0';
+            mode_left <= "01";   -- Normal mode when stopped
+            mode_right <= "01";  -- Normal mode when stopped
         else
             if sensorLeft = '0' and sensorRight = '0' then
                 motorLeft <= refPwmFst;
                 motorRight <= refPwmFst;
+                mode_left <= "10";   -- Fast mode
+                mode_right <= "10";  -- Fast mode
 
             elsif sensorLeft = '1' and sensorRight = '0' then
                 motorLeft <= refPwmSlw;
                 motorRight <= refPwmFst;
+                mode_left <= "00";   -- Slow mode
+                mode_right <= "10";  -- Fast mode
 
             elsif sensorLeft = '0' and sensorRight = '1' then
                 motorLeft <= refPwmFst;
                 motorRight <= refPwmSlw;
+                mode_left <= "10";   -- Fast mode
+                mode_right <= "00";  -- Slow mode
 
             else
                 motorLeft <= refPwmStd;
                 motorRight <= refPwmStd;
+                mode_left <= "01";   -- Normal mode
+                mode_right <= "01";  -- Normal mode
             end if;
         end if;
     end process;

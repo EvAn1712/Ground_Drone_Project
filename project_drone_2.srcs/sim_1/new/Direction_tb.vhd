@@ -42,6 +42,8 @@ architecture sim of Direction_tb is
 
     signal motorL : std_logic;
     signal motorR : std_logic;
+    signal mode_right_tb : std_logic_vector(1 downto 0);
+    signal mode_left_tb : std_logic_vector(1 downto 0);
 
     constant clk_period : time := 20 ns;
 
@@ -57,7 +59,9 @@ begin
             sensorRight => sensorR,
             state_move => state_move,
             motorLeft => motorL,
-            motorRight => motorR
+            motorRight => motorR,
+            mode_right => mode_right_tb,
+            mode_left => mode_left_tb
         );
 
     clk_proc :process

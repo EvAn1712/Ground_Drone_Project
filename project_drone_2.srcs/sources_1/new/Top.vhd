@@ -42,7 +42,9 @@ entity Top is
     ButtonStart : in std_logic;
 
     motorLeft : out std_logic;
-    motorRight : out std_logic
+    motorRight : out std_logic;
+    seg : out std_logic_vector(6 downto 0);
+    an : out std_logic_vector(3 downto 0)
   );
 end Top;
 
@@ -54,6 +56,8 @@ architecture Behavioral of Top is
 
     signal move_s : std_logic;
 
+    signal mode_right_s : std_logic_vector(1 downto 0);
+    signal mode_left_s : std_logic_vector(1 downto 0);
 
 begin
     I_PWM: entity work.PWM
@@ -84,8 +88,19 @@ begin
             sensorRight => sensorRight,
             state_move => move_s,
             motorLeft => motorLeft,
-            motorRight => motorRight
+            motorRight => motorRight,
+            mode_right => mode_right_s,
+            mode_left => mode_left_s
         );
 
+    I_SevenSegment: entity work.SevenSegmentDisplay
+        port map (
+            clk => clk,
+            reset => reset,
+            mode_right => mode_right_s,
+            mode_left => mode_left_s,
+            seg => seg,
+            an => an
+        );
 
 end Behavioral;
