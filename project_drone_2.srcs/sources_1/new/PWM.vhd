@@ -54,7 +54,7 @@ begin
     end process;
 
     pwm_fst <= '1' when pwmcnt < 95 else '0';
-    pwm_std <= '1' when pwmcnt < 8 else '0';
+    pwm_std <= '1' when pwmcnt < 50 else '0';
     pwm_slw <= '1' when pwmcnt < 15 else '0';
 
 end Behavioral;
